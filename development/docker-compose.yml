@@ -1,0 +1,33 @@
+version: '2'
+services:
+  graphql:
+    image: 'node:10.15'
+    container_name: 'fab_graphql'
+    working_dir: /usr/src/app
+    volumes:
+      - ./src/graphql:/usr/src/app
+    ports:
+      - "8888:8888"
+    environment:
+      PORT: 8888
+      ROOT_URI: "http://root-app-ingress.fab.192.116.82.73.xip.io"
+    ports:
+      - 8888:8888
+    command: npm start
+
+  dashboard:
+    image: 'node:10.15'
+    container_name: 'fab_dashboard'
+    working_dir: /usr/src/app
+    volumes:
+      - ./src/dashboard:/usr/src/app
+    ports:
+      - "3000:3000"
+    environment:
+      PORT: 3000
+      FCC_URL: "http://localhost:8888"
+      FCC_WS: "ws://localhost:8888"
+    command: yarn dev
+    depends_on:
+      - graphql
+

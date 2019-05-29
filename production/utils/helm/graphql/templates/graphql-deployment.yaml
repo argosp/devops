@@ -1,0 +1,29 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  annotations: {}
+  labels:
+    app: "{{ .Values.graphql.name }}"
+  name: "{{ .Values.graphql.name }}-deployment"
+spec:
+  replicas: {{ .Values.graphql.deployment.replicas }}
+  template:
+    metadata:
+      labels:
+        app: "{{ .Values.graphql.name }}"
+    spec:
+      containers:
+      - image: "{{ .Values.global.image.registry }}/{{ .Values.graphql.deployment.image.name }}:{{ .Values.graphql.deployment.image.tag }}"
+        command: ["sh", "-c", "node src/server.js"]
+        imagePullPolicy: Always
+        name: "{{ .Values.graphql.name }}"
+        ports:
+        - containerPort: {{ .Values.graphql.service.default.port }}
+        envFrom:
+        - configMapRef:
+            name: "{{ .Values.graphql.deployment.configmap }}"
+        resources: {}
+      restartPolicy: Always
+      imagePullSecrets:
+        - name: {{ .Values.graphql.deployment.image.pullSecrets }}
+status: {}

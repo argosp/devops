@@ -1,0 +1,9 @@
+[submodule "production/src/trialgraph"]
+	path = production/src/trialgraph
+	url = git@github.com:argosp/trialgraph.git
+[submodule "production/src/trialdash"]
+	path = production/src/trialdash
+	url = git@github.com:argosp/trialdash.git
+[submodule "production/argos"]
+	path = production/argos
+	url = git@github.com:argosp/argos.git

@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: Service
+metadata:
+  annotations: {}
+  labels:
+    app: "{{ .Values.dashboard.name }}"
+    version: "{{ .Values.dashboard.version }}"
+  name: "{{ .Values.dashboard.name }}"
+spec:
+  type: ClusterIP
+  ports:
+  - name: "{{ .Values.dashboard.service.default.name }}"
+    port: {{ .Values.dashboard.service.default.port }}
+    targetPort: {{ .Values.dashboard.service.default.targetPort }}
+  selector:
+    app: "{{ .Values.dashboard.name }}"
+status:
+  loadBalancer: {}

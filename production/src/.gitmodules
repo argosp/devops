@@ -1,0 +1,6 @@
+[submodule "dashboard"]
+	path = dashboard
+	url = git@gitlab.linnovate.net:firstairborne/dashboard.git
+[submodule "graphql"]
+	path = graphql
+	url = git@gitlab.linnovate.net:firstairborne/graphql.git

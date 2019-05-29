@@ -1,0 +1,23 @@
+version: '3.4'
+services:
+  graphql:
+    build:
+      context: ..
+      dockerfile: ./utils/dockerfiles/trialgraph/Dockerfile
+    image: "${REGISTRY}/${GROUP}/${PROJECT_GRAPHQL}:${TAG_GRAPHQL}"
+    container_name: 'argos_graphql'    
+    environment:
+      PORT: ${GRAPHQL_PORT}
+      ROOT_URI: "${ROOT_URI}"
+
+  dashboard:
+    build:
+      context: ..
+      dockerfile: ./utils/dockerfiles/trialdash/Dockerfile
+    image: "${REGISTRY}/${GROUP}/${PROJECT_DASHBOARD}:${TAG_DASHBOARD}"
+    container_name: 'argos_dashboard'
+    environment:
+      PORT: ${DASHBOARD_PORT}
+      FCC_URL: ${FCC_URL}
+
+

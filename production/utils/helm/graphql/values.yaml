@@ -1,0 +1,52 @@
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+# Note about resources
+# We usually recommend not to specify default resources and to leave this as a conscious
+# choice for the user. This also increases chances charts run on environments with little
+# resources, such as Minikube. If you do want to specify resources, uncomment the following
+# lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+# limits:
+#  cpu: 100m                                                                                                                          
+#    memory: 128Mi
+# requests:
+#  cpu: 100m
+#  memory: 128Mi
+
+# image: {{ .Values.image.registry }}/{{ .Values.example.deployment.image }}:{{ .Values.example.deployment.tag }}
+# replicas: {{ .Values.example.deployment.replicas }}
+# external-service-port: {{ .Values.example.service.default.port }}
+# internal-service-port: {{ .Values.example.service.default.targetPort }}
+# ingress: example.{{ .Release.Namespace }}.{{ .Values.ingress.wildcard }}
+
+graphql:
+  name: 'trialgraph'
+  version: '1.0.0'
+  deployment:
+    configmap: 'trialgraph-configmap'
+    replicas: 1
+    image:
+      name: 'trialgraph'
+      tag: 0.1
+  service:
+    default:
+      name: "8888"
+      port: 8888
+      targetPort: 8888
+  configmap:
+    data:
+      PORT: 8888
+      ROOT_URI: 'http://root-app-ingress.argos.192.116.82.73.xip.io'
+      ROOT_TOKEN: 'eyJhbGciOiJIUzI1NiJ9.JTdCJTIyX2lkJTIyOiUyMjVjZGQzOTNmYjJhNDI3MDAwYjA2NTc1NSUyMiwlMjJ1aWQlMjI6JTIyMWY1OTZiNDAtNzdjNC0xMWU5LTg0ZWMtNGIyM2YyYmUxNjMzJTIyLCUyMmlkJTIyOiUyMmFkbWluMUBsaW5ub3ZhdGUubmV0JTIyLCUyMm5hbWUlMjI6JTIyYWRtaW4xJTIyLCUyMmVtYWlsJTIyOiUyMmFkbWluMUBsaW5ub3ZhdGUubmV0JTIyLCUyMnVzZXJuYW1lJTIyOiUyMmFkbWluMSUyMiwlMjJfX3YlMjI6MCwlMjJHZXRNYWlsRXZlcnlEYXlBYm91dE15VGFza3MlMjI6JTIybm8lMjIsJTIyR2V0TWFpbEV2ZXJ5V2Vla0Fib3V0R2l2ZW5UYXNrcyUyMjolMjJubyUyMiwlMjJHZXRNYWlsRXZlcnlXZWVrQWJvdXRNeVRhc2tzJTIyOiUyMm5vJTIyLCUyMnByb3ZpZGVyJTIyOiUyMmxvY2FsJTIyLCUyMnJvbGVzJTIyOiU1QiUyMmF1dGhlbnRpY2F0ZWQlMjIlNUQlN0Q.16tpGIfsgd8cvUwNsDmb0sBCN96LmjI-DsdPZjYQj6g'
+      DEVICES_PROJECT_ID: '5ceb9c4c30dd2200062f9704'
+  ingress:
+    prefix: 'trialgraph-ingress'
+
+
+# overriden by global when deployed as a subchart
+global:
+  ingress:
+    enabled: true
+    wildcard: 'linnovate.net'
+  image:
+    registry: 'docker.io/linnovate'

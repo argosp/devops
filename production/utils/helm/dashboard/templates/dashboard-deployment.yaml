@@ -1,0 +1,29 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  annotations: {}
+  labels:
+    app: "{{ .Values.dashboard.name }}"
+  name: "{{ .Values.dashboard.name }}-deployment"
+spec:
+  replicas: {{ .Values.dashboard.deployment.replicas }}
+  template:
+    metadata:
+      labels:
+        app: "{{ .Values.dashboard.name }}"
+    spec:
+      containers:
+      - image: "{{ .Values.global.image.registry }}/{{ .Values.dashboard.deployment.image.name }}:{{ .Values.dashboard.deployment.image.tag }}"
+        command: ["sh", "-c", "yarn start"]
+        imagePullPolicy: Always
+        name: "{{ .Values.dashboard.name }}"
+        ports:
+        - containerPort: {{ .Values.dashboard.service.default.port }}
+        envFrom:
+        - configMapRef:
+            name: "{{ .Values.dashboard.deployment.configmap }}"
+        resources: {}
+      restartPolicy: Always
+      imagePullSecrets:
+        - name: {{ .Values.dashboard.deployment.image.pullSecrets }}
+status: {}
