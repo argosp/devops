@@ -14,6 +14,7 @@ spec:
           servicePort: {{ .Values.graphql.service.default.port }}
   tls:
   - hosts:
+    - {{ .Values.graphql.ingress.prefix }}.{{ .Release.Namespace }}.{{ .Values.global.ingress.wildcard }}
     secretName: xip
 
 # apiVersion: extensions/v1beta1
