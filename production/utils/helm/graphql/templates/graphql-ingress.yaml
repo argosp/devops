@@ -12,6 +12,9 @@ spec:
         backend:
           serviceName: "{{ .Values.graphql.name }}"
           servicePort: {{ .Values.graphql.service.default.port }}
+  tls:
+  - hosts:
+    secretName: xip
 
 # apiVersion: extensions/v1beta1
 # kind: Ingress
